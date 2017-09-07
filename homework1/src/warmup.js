@@ -1,45 +1,48 @@
-function change (cents) {
+exports.change = function change(cents) {
+  if (cents < 0) {
+    throw new RangeError('amount cannot be negative');
+  }
   const quarters = Math.floor(cents / 25);
   const dimes = Math.floor((cents - (quarters * 25)) / 10);
-  const nickels = Math.floor((cents - (quarters * 25) - (dimes * 20)) / 5);
+  const nickels = Math.floor((cents - (quarters * 25) - (dimes * 10)) / 5);
   return [quarters, dimes, nickels, cents % 5];
-}
+};
 
-function stripQuotes (str) {
-  return str.replace(/['"]+g/, '');
-}
+exports.stripQuotes = function stripQuotes(str) {
+  return str.replace(/['"]+/g, '');
+};
 
-function scramble () {
+exports.scramble = function scramble() {
   return false;
-}
+};
 
-function powers () {
+exports.powers = function powers() {
   return false;
-}
+};
 
-function powersGenerator (base, exp) {
+exports.powersGenerator = function powersGenerator() {
   return false;
-}
+};
 
-function say () {
+exports.say = function say() {
   return false;
-}
+};
 
-function interleave () {
+exports.interleave = function interleave() {
   return false;
-}
+};
 
-function cylinder () {
+exports.cylinder = function cylinder() {
   return false;
-}
+};
 
-function makeCryptoFunctions () {
+exports.makeCryptoFunctions = function makeCryptoFunctions() {
   return false;
-}
+};
 
-function randomName () {
+exports.randomName = function randomName() {
   return false;
-}
+};
 
-console.log(change(3));
-console.log(stripQuotes('aer""""er4"potato'))
+// console.log(change(3));
+// console.log(stripQuotes('aer""""er4"potato'))
