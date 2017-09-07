@@ -6,7 +6,7 @@ function change (cents) {
 }
 
 function stripQuotes (str) {
-  return str.replace(/['"]+g/, '');
+  return str.replace(/['"]+/g, '');
 }
 
 function scramble () {
@@ -42,4 +42,4 @@ function randomName () {
 }
 
 console.log(change(3));
-console.log(stripQuotes('aer""""er4"potato'))
+console.log(stripQuotes('aer""""\'er4"potato'))
