@@ -51,5 +51,6 @@ exports.randomName = function randomName() {
   return false;
 };
 
-// console.log(change(3));
-// console.log(stripQuotes('aer""""er4"potato'))
+module.export = {
+
+};
