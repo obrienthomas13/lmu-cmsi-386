@@ -38,15 +38,58 @@ exports.powersGenerator = function* powersGenerator(base, max) {
   }
 };
 
-exports.say = function say() {
-  return false;
+exports.say = function say(word) {
+  if (!word) {
+    return this;
+  }
+  return word + this.say();
 };
 
 exports.interleave = function interleave() {
   return false;
 };
 
-exports.cylinder = function cylinder() {
+exports.cylinder = function cylinder(data) {
+  let radius = data.radius || 1;
+  let height = data.height || 1;
+
+  // Note: Widen and stretch do work in the sense that the area changes when you
+  // call these functions, but when you get radius/heaight it doesnt. Think the
+  // getters are broken
+  function widen(value) {
+    console.log(radius + " before");
+    radius *= value;
+    console.log(radius + " after");
+  }
+  function stretch(value) {
+    height *= value;
+  }
+  function volume() {
+    return Math.PI * radius * radius * height;
+  }
+  function surfaceArea() {
+    return (Math.PI * radius * height * 2) + (2 * Math.PI * radius * radius);
+  }
+
+  function getRadius() {
+    console.log(radius + " radius")
+    return radius;
+  }
+  function getHeight() {
+    return height;
+  }
+
+  return Object.freeze({
+    radius,
+    height,
+    getRadius,
+    getHeight,
+    widen,
+    stretch,
+    volume,
+    surfaceArea
+  });
+
   return false;
 };
 
@@ -61,11 +104,3 @@ exports.randomName = function randomName() {
 module.export = {
 
 };
-
-let help = this.powersGenerator(2, 1);
-console.log(help.next());
-console.log(help.next());
-console.log(help.next());
-console.log(help.next());
-console.log(help.next());
-console.log(help.next());
