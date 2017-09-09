@@ -23,12 +23,19 @@ exports.scramble = function scramble(str) {
   return result.join('');
 };
 
-exports.powers = function powers() {
-  return false;
+exports.powers = function powers(base, max, other) {
+  let value = 1;
+  while (value < max) {
+    value *= base;
+  }
 };
 
-exports.powersGenerator = function powersGenerator() {
-  return false;
+exports.powersGenerator = function* powersGenerator(base, max) {
+  let value = 1;
+  while ((value) <= max) {
+    yield value;
+    value *= base;
+  }
 };
 
 exports.say = function say() {
@@ -54,3 +61,11 @@ exports.randomName = function randomName() {
 module.export = {
 
 };
+
+let help = this.powersGenerator(2, 1);
+console.log(help.next());
+console.log(help.next());
+console.log(help.next());
+console.log(help.next());
+console.log(help.next());
+console.log(help.next());
