@@ -45,8 +45,14 @@ exports.say = function say(word) {
   return word + this.say();
 };
 
-exports.interleave = function interleave() {
-  return false;
+exports.interleave = function interleave(array1, ...array2) {
+  const initLength = array1.length;
+  for (let i = 1; i <= initLength; i += 2) {
+    if (array2.length === 0) { break; }
+    array1.splice(i, 0, array2[0]);
+    array2.shift();
+  }
+  return array1.concat(array2);
 };
 
 exports.cylinder = function cylinder(data) {
