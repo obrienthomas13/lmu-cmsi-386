@@ -1,4 +1,4 @@
-exports.change = function change(cents) {
+function change(cents) {
   if (cents < 0) {
     throw new RangeError('amount cannot be negative');
   }
@@ -6,13 +6,13 @@ exports.change = function change(cents) {
   const dimes = Math.floor((cents - (quarters * 25)) / 10);
   const nickels = Math.floor((cents - (quarters * 25) - (dimes * 10)) / 5);
   return [quarters, dimes, nickels, cents % 5];
-};
+}
 
-exports.stripQuotes = function stripQuotes(str) {
+function stripQuotes(str) {
   return str.replace(/['"]+/g, '');
-};
+}
 
-exports.scramble = function scramble(str) {
+function scramble(str) {
   const result = [];
   const strTemp = str.split('');
   while (strTemp.length > 0) {
@@ -21,31 +21,31 @@ exports.scramble = function scramble(str) {
     strTemp.splice(rand, 1);
   }
   return result.join('');
-};
+}
 
-exports.powers = function powers(base, max, other) {
+function powers(base, max, other) {
   let value = 1;
   while (value < max) {
     value *= base;
   }
-};
+}
 
-exports.powersGenerator = function* powersGenerator(base, max) {
+function* powersGenerator(base, max) {
   let value = 1;
   while ((value) <= max) {
     yield value;
     value *= base;
   }
-};
+}
 
-exports.say = function say(word) {
+function say(word) {
   if (!word) {
     return this;
   }
   return word + this.say();
-};
+}
 
-exports.interleave = function interleave(array1, ...array2) {
+function interleave(array1, ...array2) {
   const initLength = array1.length;
   for (let i = 1; i <= initLength; i += 2) {
     if (array2.length === 0) { break; }
@@ -53,9 +53,9 @@ exports.interleave = function interleave(array1, ...array2) {
     array2.shift();
   }
   return array1.concat(array2);
-};
+}
 
-exports.cylinder = function cylinder(data) {
+function cylinder(data) {
   let radius = data.radius || 1;
   let height = data.height || 1;
 
@@ -97,16 +97,25 @@ exports.cylinder = function cylinder(data) {
   });
 
   return false;
-};
+}
 
-exports.makeCryptoFunctions = function makeCryptoFunctions() {
+function makeCryptoFunctions() {
   return false;
-};
+}
 
-exports.randomName = function randomName() {
+function randomName() {
   return false;
-};
+}
 
 module.export = {
-
+  change,
+  stripQuotes,
+  scramble,
+  powers,
+  powersGenerator,
+  say,
+  interleave,
+  cylinder,
+  makeCryptoFunctions,
+  randomName,
 };
