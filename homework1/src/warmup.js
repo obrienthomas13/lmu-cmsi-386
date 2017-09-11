@@ -23,7 +23,7 @@ exports.scramble = function scramble(str) {
   return result.join('');
 };
 
-exports.powers = function powers(base, max, other) {
+exports.powers = function powers(base, max) {
   let value = 1;
   while (value < max) {
     value *= base;
@@ -63,9 +63,9 @@ exports.cylinder = function cylinder(data) {
   // call these functions, but when you get radius/heaight it doesnt. Think the
   // getters are broken
   function widen(value) {
-    console.log(radius + " before");
+    // console.log(radius + " before");
     radius *= value;
-    console.log(radius + " after");
+    // console.log(radius + " after");
   }
   function stretch(value) {
     height *= value;
@@ -78,7 +78,7 @@ exports.cylinder = function cylinder(data) {
   }
 
   function getRadius() {
-    console.log(radius + " radius")
+    // console.log(radius + " radius")
     return radius;
   }
   function getHeight() {
@@ -93,10 +93,10 @@ exports.cylinder = function cylinder(data) {
     widen,
     stretch,
     volume,
-    surfaceArea
+    surfaceArea,
   });
 
-  return false;
+  // return false;
 };
 
 exports.makeCryptoFunctions = function makeCryptoFunctions() {
