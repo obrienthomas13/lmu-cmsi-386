@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 exports.change = function change(cents) {
   if (cents < 0) {
     throw new RangeError('amount cannot be negative');
@@ -23,10 +25,15 @@ exports.scramble = function scramble(str) {
   return result.join('');
 };
 
-exports.powers = function powers(base, max) {
-  let value = 1;
-  while (value < max) {
-    value *= base;
+exports.powers = function powers(base, max, callback) {
+  let value = 0;
+  while (value + value <= max && max > 0) {
+    if (value === 0) {
+      value = 1;
+    } else {
+      value += value;
+    }
+    callback(value);
   }
 };
 
@@ -39,11 +46,23 @@ exports.powersGenerator = function* powersGenerator(base, max) {
 };
 
 exports.say = function say(word) {
-  // return word === "" ? word : say();
-  if (!word) {
-    return this;
-  }
-  return word + this.say();
+  // function nextString(totalStr) {
+  //   let next = totalStr.concat(' ');
+  //   return next;
+  // }
+  // function endString() {
+  //
+  // }
+  return function(chain) {
+    if (word !== undefined) {
+      // let result = chain === undefined ? chain : chain.concat(word).concat(' ');
+      // console.log(result);
+      return chain === undefined ? word : chain.concat(word).concat(' ');
+    } else {
+      console.log("second");
+      return chain.slice(0, chain.length - 1);
+    }
+  };
 };
 
 exports.interleave = function interleave(array1, ...array2) {
@@ -63,9 +82,7 @@ exports.cylinder = function cylinder(data) {
   // call these functions, but when you get radius/heaight it doesnt. Think the
   // getters are broken
   function widen(value) {
-    // console.log(radius + " before");
     radius *= value;
-    // console.log(radius + " after");
   }
   function stretch(value) {
     height *= value;
@@ -78,11 +95,13 @@ exports.cylinder = function cylinder(data) {
   }
 
   function getRadius() {
-    // console.log(radius + " radius")
     return radius;
   }
   function getHeight() {
     return height;
+  }
+  function toString() {
+    return `Cylinder with radius ${radius} and height ${height}`;
   }
 
   return Object.freeze({
@@ -94,17 +113,38 @@ exports.cylinder = function cylinder(data) {
     stretch,
     volume,
     surfaceArea,
+    toString,
   });
 
   // return false;
 };
 
-exports.makeCryptoFunctions = function makeCryptoFunctions() {
-  return false;
+exports.makeCryptoFunctions = function makeCryptoFunctions(key, algo) {
+  function encrypt(text) {
+    const cipher = crypto.createCipher(key, algo);
+    let crypted = cipher.update(text, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+  }
+
+  function decrypt(text) {
+    const decipher = crypto.createDecipher(key, algo);
+    let dec = decipher.update(text, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+  }
+  return [encrypt, decrypt];
 };
 
-exports.randomName = function randomName() {
-  return false;
+exports.randomName = function randomName(data) {
+  // `http://uinames.com/api/?gender=${data.gender}?region=${data.region}`
+  // let xhttp = new XMLHttpRequest();
+  // xhttp.open("POST", "Your Rest URL Here", false);
+  // xhttp.setRequestHeader("Content-type", "application/json");
+  // xhttp.send();
+  // let response = JSON.parse(xhttp.responseText);
+
+  return fetch();
 };
 
 module.export = {
