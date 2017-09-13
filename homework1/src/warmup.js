@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const rp = require('request-promise');
 
 exports.change = function change(cents) {
   if (cents < 0) {
@@ -53,16 +54,25 @@ exports.say = function say(word) {
   // function endString() {
   //
   // }
-  return function(chain) {
+  let [last, current] = ['', word];
+  return () => {
     if (word !== undefined) {
+      [last, current] = [current, current.concat(word).concat(' ')];
       // let result = chain === undefined ? chain : chain.concat(word).concat(' ');
       // console.log(result);
-      return chain === undefined ? word : chain.concat(word).concat(' ');
-    } else {
-      console.log("second");
-      return chain.slice(0, chain.length - 1);
+      return current;
     }
+    return last.slice(0, last.length - 1);
   };
+  // return (chain) => {
+  //   if (word !== undefined) {
+  //     // let result = chain === undefined ? chain : chain.concat(word).concat(' ');
+  //     // console.log(result);
+  //     return chain === undefined ? word : chain.concat(word).concat(' ');
+  //   }
+  //   console.log('second');
+  //   return chain.slice(0, chain.length - 1);
+  // };
 };
 
 exports.interleave = function interleave(array1, ...array2) {
@@ -75,6 +85,9 @@ exports.interleave = function interleave(array1, ...array2) {
 };
 
 exports.cylinder = function cylinder(data) {
+// exports.cylinder = function cylinder({ radius, height }) {
+  // let raidusTemp = radius || 1;
+  // let heightTemp = height || 1;
   let radius = data.radius || 1;
   let height = data.height || 1;
 
@@ -119,32 +132,38 @@ exports.cylinder = function cylinder(data) {
   // return false;
 };
 
-exports.makeCryptoFunctions = function makeCryptoFunctions(key, algo) {
-  function encrypt(text) {
-    const cipher = crypto.createCipher(key, algo);
-    let crypted = cipher.update(text, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
-  }
-
-  function decrypt(text) {
-    const decipher = crypto.createDecipher(key, algo);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
-  }
-  return [encrypt, decrypt];
+exports.makeCryptoFunctions = function makeCryptoFunctions(key, alg) {
+  const localKey = key;
+  const localAlg = alg;
+  return [
+    function encrypt(str) {
+      const cipher = crypto.createCipher(localKey, localAlg);
+      let crypted = cipher.update(str, 'utf8', 'hex');
+      crypted += cipher.final('hex');
+      return crypted;
+    },
+    function decrypt(str) {
+      const decipher = crypto.createDecipher(localKey, localAlg);
+      let dec = decipher.update(str, 'hex', 'utf8');
+      dec += decipher.final('utf8');
+      return dec;
+    },
+  ];
 };
 
 exports.randomName = function randomName(data) {
-  // `http://uinames.com/api/?gender=${data.gender}?region=${data.region}`
-  // let xhttp = new XMLHttpRequest();
-  // xhttp.open("POST", "Your Rest URL Here", false);
-  // xhttp.setRequestHeader("Content-type", "application/json");
-  // xhttp.send();
-  // let response = JSON.parse(xhttp.responseText);
-
-  return fetch();
+  const options = {
+    uri: `http://uinames.com/api/?gender=${data.gender}&region=${data.region}&amount=1`,
+    json: true,
+  };
+  return rp(options)
+    .then((repos) => {
+      return `${repos.surname}, ${repos.name}`;
+    });
+  // return rp(options)
+  //   .then( function rp(repos) {
+  //     return `${repos.surname}, ${repos.name}`;
+  //   });
 };
 
 module.export = {
