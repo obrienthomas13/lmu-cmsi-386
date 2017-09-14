@@ -120,38 +120,44 @@ exports.interleave = function interleave(array1, ...array2) {
   return array1.concat(array2);
 };
 
-exports.cylinder = function cylinder({radius = 1, height = 1}) {
+exports.cylinder = function cylinder(data) {
+// exports.cylinder = function cylinder({ radius, height }) {
+  // let raidusTemp = radius || 1;
+  // let heightTemp = height || 1;
+  let radius = data.radius || 1;
+  let height = data.height || 1;
+
   // Note: Widen and stretch do work in the sense that the area changes when you
   // call these functions, but when you get radius/heaight it doesnt. Think the
   // getters are broken
-  let widen = (value) => {
+  function widen(value) {
     radius *= value;
   }
-  let stretch = (value) => {
+  function stretch(value) {
     height *= value;
   }
-  let volume = () => {
+  function volume() {
     return Math.PI * radius * radius * height;
   }
-  let surfaceArea = () => {
+  function surfaceArea() {
     return (Math.PI * radius * height * 2) + (2 * Math.PI * radius * radius);
   }
 
-  // function getRadius() {
-  //   return radius;
-  // }
-  // function getHeight() {
-  //   return height;
-  // }
-  let toString = () => {
+  function getRadius() {
+    return radius;
+  }
+  function getHeight() {
+    return height;
+  }
+  function toString() {
     return `Cylinder with radius ${radius} and height ${height}`;
   }
 
   return Object.freeze({
     radius,
     height,
-    // getRadius,
-    // getHeight,
+    getRadius,
+    getHeight,
     widen,
     stretch,
     volume,
@@ -186,14 +192,10 @@ exports.randomName = function randomName(data) {
     uri: `http://uinames.com/api/?gender=${data.gender}&region=${data.region}&amount=1`,
     json: true,
   };
-  return rp(options)
-    .then((repos) => {
-      return `${repos.surname}, ${repos.name}`;
-    });
-  // return rp(options)
-  //   .then( function rp(repos) {
-  //     return `${repos.surname}, ${repos.name}`;
-  //   });
+  function printPerson(person) {
+    return `${person.surname}, ${person.name}`;
+  }
+  return rp(options).then(printPerson);
 };
 
 module.export = {
