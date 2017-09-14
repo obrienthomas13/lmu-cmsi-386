@@ -46,69 +46,16 @@ exports.powersGenerator = function* powersGenerator(base, max) {
   }
 };
 
-// exports.say = const say = ((word) => {
 exports.say = function say(word) {
-  // function nextString(totalStr) {
-  //   let next = totalStr.concat(' ');
-  //   return next;
-  // }
-  // function endString() {
-  //
-  // }
-  console.log("are you happening");
-  let chainedString = '';
-  return () => {
-    if (word !== undefined) {
-      chainedString += word;
-      // return chainedString;
+  if (word === undefined) {
+    return '';
+  }
+  return (nextWord) => {
+    if (!nextWord) {
+      return word;
     }
-    return chainedString;
-    // return chainedString.slice(0, chainedString.length - 1);
+    return say(`${word} ${nextWord}`);
   };
-
-  // ===============================================================
-  // let [last, current] = ['', word];
-  // return () => {
-  //   let memory = Array.prototype.slice.call( word );
-  //   return function() {
-  //     let local = memory.slice();
-  //     Array.prototype.push.apply( local, word );
-  //   };
-    // if (last === '') {
-    //   // console.log('condition one');
-    //   // console.log('before');
-    //   // console.log('last: ' + last);
-    //   // console.log('current: ' + current);
-    //   [last, current] = [current, ''];
-    //   // console.log('after');
-    //   // console.log('last: ' + last);
-    //   // console.log('current: ' + current);
-    //   return last;
-    // } else if (word !== undefined) {
-    // // if (word !== undefined) {
-    //   console.log('condition two');
-    //   last = current;
-    //   current = current.concat(' ').concat(word);
-    //   // let result = chain === undefined ? chain : chain.concat(word).concat(' ');
-    //   console.log('last: ' + last);
-    //   console.log('current: ' + current);
-    //   return [last, current];
-    // }
-    // console.log('condition three');
-    // console.log(last);
-    // // return last.slice(0, last.length - 1);
-    // return last;
-    // ===============================================================
-  // };
-  // return (chain) => {
-  //   if (word !== undefined) {
-  //     // let result = chain === undefined ? chain : chain.concat(word).concat(' ');
-  //     // console.log(result);
-  //     return chain === undefined ? word : chain.concat(word).concat(' ');
-  //   }
-  //   console.log('second');
-  //   return chain.slice(0, chain.length - 1);
-  // };
 };
 
 exports.interleave = function interleave(array1, ...array2) {
@@ -196,8 +143,4 @@ exports.randomName = function randomName(data) {
     return `${person.surname}, ${person.name}`;
   }
   return rp(options).then(printPerson);
-};
-
-module.export = {
-
 };

@@ -70,7 +70,7 @@ describe('scramble', () => {
 
 describe('say', () => {
   it('works when there are no words', () => {
-    // say().should.eql('');
+    say().should.eql('');
   });
 
   it('works when there are words', () => {
