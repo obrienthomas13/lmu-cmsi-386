@@ -145,10 +145,8 @@ describe('The cylinder function', () => {
   it('mutates with stretch and widen', () => {
     const c = cylinder({ radius: 2, height: 10 });
     c.widen(3);
-    console.log(c.radius);
     c.radius.should.eql(6);
     c.stretch(2);
-    console.log(c.height);
     c.height.should.eql(20);
   });
   it('changes volumes after stretch and widen', () => {
