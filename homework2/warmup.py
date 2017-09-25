@@ -25,8 +25,17 @@ def say():
     return False
 
 
-def triples():
-    return False
+def triples(maxHypotenuse):
+    if maxHypotenuse < 0:
+        raise ValueError("amount cannot be negative");
+    tripleList = []
+    for c in range (1, maxHypotenuse + 1):
+        for b in range(1, c):
+            for a in range (1, b):
+                if a * a + b * b == c * c:
+                    tripleList.append((a, b, c))
+    tripleList.sort();
+    return tripleList
 
 
 def powers():
