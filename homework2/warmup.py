@@ -1,4 +1,4 @@
-import requests
+import requests, re
 # import pycrypto
 #        ^ Needs to be something like 'from Crypto.xxxx import xxxx'
 
@@ -7,8 +7,8 @@ def change():
     return False
 
 
-def strip_quotes():
-    return False
+def strip_quotes(str):
+    return re.sub('[\'\"]', '', str)
 
 
 def scramble():
