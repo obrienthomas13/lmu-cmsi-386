@@ -1,4 +1,5 @@
-import requests, re
+import requests
+import re
 # import pycrypto
 #        ^ Needs to be something like 'from Crypto.xxxx import xxxx'
 
@@ -42,8 +43,11 @@ def triples(maxHypotenuse):
     return tripleList
 
 
-def powers():
-    return False
+def powers(base, max):
+    value = 1
+    while value <= max:
+        yield value
+        value *= base
 
 
 def interleave():
@@ -62,4 +66,5 @@ def random_name(**data):
     payload = {'gender': data['gender'], 'region': data['region'], 'amount': 1}
     person = requests.get('http://uinames.com/api/', params=payload).json()
     return '{}, {}'.format(person['surname'], person['name'])
-    # return '{}, {}'.format(person.json()['surname'], person.json()['name']) if person.ok else raise ValueError('{}'.format(person.json()))
+    # return '{}, {}'.format(person.json()['surname'], person.json()
+    #['name']) if person.ok else raise ValueError('{}'.format(person.json()))
