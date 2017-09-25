@@ -1,5 +1,6 @@
 import requests
 import re
+import random
 # import pycrypto
 #        ^ Needs to be something like 'from Crypto.xxxx import xxxx'
 
@@ -18,8 +19,14 @@ def strip_quotes(string):
     return re.sub('[\'\"]', '', string)
 
 
-def scramble():
-    return False
+def scramble(string):
+    result = []
+    stringArray = list(string)
+    while len(stringArray) > 0:
+        randIndex = random.randint(0, len(stringArray) - 1)
+        result.append(stringArray[randIndex])
+        stringArray.pop(randIndex)
+    return ''.join(result)
 
 
 def say(word=None):
