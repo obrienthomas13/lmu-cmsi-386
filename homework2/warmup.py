@@ -3,8 +3,14 @@ import requests, re
 #        ^ Needs to be something like 'from Crypto.xxxx import xxxx'
 
 
-def change():
-    return False
+def change(cents):
+    if cents < 0 :
+        raise ValueError("amount cannot be negative");
+    quarters = (cents // 25);
+    dimes = ((cents - (quarters * 25)) // 10);
+    nickels = ((cents - (quarters * 25) - (dimes * 10)) // 5);
+
+    return (quarters, dimes, nickels, cents % 5);
 
 
 def strip_quotes(str):
