@@ -4,17 +4,17 @@ import requests, re
 
 
 def change(cents):
-    if cents < 0 :
-        raise ValueError("amount cannot be negative");
-    quarters = (cents // 25);
-    dimes = ((cents - (quarters * 25)) // 10);
-    nickels = ((cents - (quarters * 25) - (dimes * 10)) // 5);
+    if cents < 0:
+        raise ValueError('amount cannot be negative')
+    quarters = cents // 25
+    maxQuarters = quarters * 25
+    dimes = (cents - maxQuarters) // 10
+    nickels = (cents - maxQuarters - dimes * 10) // 5
+    return (quarters, dimes, nickels, cents % 5)
 
-    return (quarters, dimes, nickels, cents % 5);
 
-
-def strip_quotes(str):
-    return re.sub('[\'\"]', '', str)
+def strip_quotes(string):
+    return re.sub('[\'\"]', '', string)
 
 
 def scramble():
@@ -23,29 +23,24 @@ def scramble():
 
 def say(word=None):
     def inner(nextWord=None):
-        if nextWord == None :
-            return word;
+        if nextWord is None:
+            return word
         return say('{} {}'.format(word, nextWord))
-
-    return '' if (word == None) else inner
-
-#    def combine(nextWord):
-#        return '({} {})'.format(word, nextWord)
-#    return word
-
+    return '' if word is None else inner
 
 
 def triples(maxHypotenuse):
     if maxHypotenuse < 0:
-        raise ValueError("amount cannot be negative");
+        raise ValueError('amount cannot be negative')
     tripleList = []
-    for c in range (1, maxHypotenuse + 1):
+    for c in range(1, maxHypotenuse + 1):
         for b in range(1, c):
-            for a in range (1, b):
+            for a in range(1, b):
                 if a * a + b * b == c * c:
                     tripleList.append((a, b, c))
-    tripleList.sort();
+    tripleList.sort()
     return tripleList
+
 
 def powers():
     return False
