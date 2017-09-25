@@ -21,8 +21,18 @@ def scramble():
     return False
 
 
-def say():
-    return False
+def say(word=None):
+    def inner(nextWord=None):
+        if nextWord == None :
+            return word;
+        return say('{} {}'.format(word, nextWord))
+
+    return '' if (word == None) else inner
+
+#    def combine(nextWord):
+#        return '({} {})'.format(word, nextWord)
+#    return word
+
 
 
 def triples(maxHypotenuse):
@@ -36,7 +46,6 @@ def triples(maxHypotenuse):
                     tripleList.append((a, b, c))
     tripleList.sort();
     return tripleList
-
 
 def powers():
     return False
