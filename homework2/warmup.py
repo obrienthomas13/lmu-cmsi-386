@@ -1,8 +1,7 @@
 import requests
 import re
 import random
-# import pycrypto
-#        ^ Needs to be something like 'from Crypto.xxxx import xxxx'
+from Crypto.Cipher import AES
 
 
 def change(cents):
@@ -65,13 +64,22 @@ def Cylinder():
     return False
 
 
-def make_crypto_functions():
-    return False
+def make_crypto_functions(cryptoKey, intialVector):
+    newCryptoKey = cryptoKey
+    newintialVector = intialVector
+
+    def encrypt(encryptByte):
+        return 'encrypt'
+
+    def decrypt(decryptByte):
+        return 'decrypt'
+    return (encrypt, decrypt)
 
 
 def random_name(**data):
     payload = {'gender': data['gender'], 'region': data['region'], 'amount': 1}
-    person = requests.get('http://uinames.com/api/', params=payload).json()
-    return '{}, {}'.format(person['surname'], person['name'])
-    # return '{}, {}'.format(person.json()['surname'], person.json()
-    #['name']) if person.ok else raise ValueError('{}'.format(person.json()))
+    person = requests.get('http://uinames.com/api/', params=payload)
+    if 'error' in person.json():
+        raise ValueError(person.text)
+    else:
+        return '{}, {}'.format(person.json()['surname'], person.json()['name'])
