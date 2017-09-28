@@ -2,15 +2,17 @@ import requests
 import re
 import random
 from Crypto.Cipher import AES
+from Crypto import Random
 
 
+# use divmod()?
 def change(cents):
     if cents < 0:
         raise ValueError('amount cannot be negative')
     quarters = cents // 25
-    maxQuarters = quarters * 25
-    dimes = (cents - maxQuarters) // 10
-    nickels = (cents - maxQuarters - dimes * 10) // 5
+    max_quarters = quarters * 25
+    dimes = (cents - max_quarters) // 10
+    nickels = (cents - max_quarters - dimes * 10) // 5
     return (quarters, dimes, nickels, cents % 5)
 
 
@@ -20,33 +22,33 @@ def strip_quotes(string):
 
 def scramble(string):
     result = []
-    stringArray = list(string)
-    while len(stringArray) > 0:
-        randIndex = random.randint(0, len(stringArray) - 1)
-        result.append(stringArray[randIndex])
-        stringArray.pop(randIndex)
+    string_array = list(string)
+    while len(string_array) > 0:
+        random_index = random.randint(0, len(string_array) - 1)
+        result.append(string_array[random_index])
+        string_array.pop(random_index)
     return ''.join(result)
 
 
 def say(word=None):
-    def inner(nextWord=None):
-        if nextWord is None:
+    def inner(next_word=None):
+        if next_word is None:
             return word
-        return say('{} {}'.format(word, nextWord))
+        return say('{} {}'.format(word, next_word))
     return '' if word is None else inner
 
 
-def triples(maxHypotenuse):
-    if maxHypotenuse < 0:
+def triples(max_hypotenuse):
+    if max_hypotenuse < 0:
         raise ValueError('amount cannot be negative')
-    tripleList = []
-    for c in range(1, maxHypotenuse + 1):
+    triple_list = []
+    for c in range(1, max_hypotenuse + 1):
         for b in range(1, c):
             for a in range(1, b):
                 if a * a + b * b == c * c:
-                    tripleList.append((a, b, c))
-    tripleList.sort()
-    return tripleList
+                    triple_list.append((a, b, c))
+    triple_list.sort()
+    return triple_list
 
 
 def powers(base, max):
@@ -56,7 +58,7 @@ def powers(base, max):
         value *= base
 
 
-def interleave():
+def interleave(a, *b):
     return False
 
 
@@ -64,14 +66,16 @@ def Cylinder():
     return False
 
 
-def make_crypto_functions(cryptoKey, intialVector):
-    newCryptoKey = cryptoKey
-    newintialVector = intialVector
+def make_crypto_functions(crypto_key, initial_vector):
+    new_crypto_key = crypto_key
+    new_initial_vector = initial_vector
 
-    def encrypt(encryptByte):
+    def encrypt(encrypt_byte):
+        iv = Random.new().read( AES.block_size )
+        cipher = AES.new( crypto_key, AES.MODE_CBC, iv )
         return 'encrypt'
 
-    def decrypt(decryptByte):
+    def decrypt(decrypt_byte):
         return 'decrypt'
     return (encrypt, decrypt)
 
