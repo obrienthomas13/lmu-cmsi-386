@@ -3,6 +3,7 @@ import re
 import random
 from Crypto.Cipher import AES
 from Crypto import Random
+import base64
 
 
 # use divmod()?
@@ -70,13 +71,14 @@ def make_crypto_functions(crypto_key, initial_vector):
     new_crypto_key = crypto_key
     new_initial_vector = initial_vector
 
-    def encrypt(encrypt_byte):
-        iv = Random.new().read( AES.block_size )
-        cipher = AES.new( crypto_key, AES.MODE_CBC, iv )
-        return 'encrypt'
+    def encrypt(encrypt_bytes):
+        cipher = AES.new(new_crypto_key, AES.MODE_CBC, new_initial_vector)
+        return cipher.encrypt(encrypt_bytes)
 
-    def decrypt(decrypt_byte):
-        return 'decrypt'
+    def decrypt(decrypt_bytes):
+        cipher = AES.new(new_crypto_key, AES.MODE_CBC, new_initial_vector)
+        return cipher.decrypt(decrypt_bytes)
+
     return (encrypt, decrypt)
 
 
@@ -87,3 +89,9 @@ def random_name(**data):
         raise ValueError(person.text)
     else:
         return '{}, {}'.format(person.json()['surname'], person.json()['name'])
+
+
+if __name__ == "__main__":
+    e, d = make_crypto_functions('zombie devops feynman123', '0000000000000000')
+    print(e(b'Hello......world'))
+    print(e(b'Hello......world') == b'\x15\x8a\xa5a\xd8\x07\\d(e\xc9\xbes*\x13\x9f')
