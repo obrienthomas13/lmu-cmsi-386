@@ -2,8 +2,6 @@ import requests
 import re
 import random
 from Crypto.Cipher import AES
-from Crypto import Random
-import base64
 
 
 # use divmod()?
@@ -59,8 +57,17 @@ def powers(base, max):
         value *= base
 
 
-def interleave(a, *b):
-    return False
+def interleave(array1, *array2):
+    initialLength = len(array1)
+    indexInArray2 = 0
+    for i in range(0, initialLength-1):
+        if len(array2) - indexInArray2 <= 0:
+            break
+        array1.insert(indexInArray2 * 2 + 1, array2[indexInArray2])
+        indexInArray2 += 1
+    for j in range(indexInArray2, len(array2)):
+        array1.insert(2 * j + 1, array2[j])
+    return array1
 
 
 def Cylinder():
@@ -89,9 +96,3 @@ def random_name(**data):
         raise ValueError(person.text)
     else:
         return '{}, {}'.format(person.json()['surname'], person.json()['name'])
-
-
-if __name__ == "__main__":
-    e, d = make_crypto_functions('zombie devops feynman123', '0000000000000000')
-    print(e(b'Hello......world'))
-    print(e(b'Hello......world') == b'\x15\x8a\xa5a\xd8\x07\\d(e\xc9\xbes*\x13\x9f')
