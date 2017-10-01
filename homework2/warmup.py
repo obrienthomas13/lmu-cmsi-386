@@ -1,6 +1,7 @@
 import requests
 import re
 import random
+import math
 from Crypto.Cipher import AES
 
 
@@ -70,8 +71,26 @@ def interleave(array1, *array2):
     return array1
 
 
-def Cylinder():
-    return False
+class Cylinder():
+    def __init__(self, radius=1, height=1):
+        self.radius = radius
+        self.height = height
+
+    def widen(self, value):
+        self.radius *= value
+
+    def stretch(self, value):
+        self.height *= value
+
+    def volume(self):
+        return math.pi * self.radius * self.radius * self.height
+
+    def surface_area(self):
+        return math.pi * self.radius * self.height * 2 + 2 * math.pi * self.radius * self.radius
+
+    def __repr__(self):
+        return 'Cylinder with radius {} and height {}'.format(
+            self.radius, self.height)
 
 
 def make_crypto_functions(crypto_key, initial_vector):
@@ -96,3 +115,11 @@ def random_name(**data):
         raise ValueError(person.text)
     else:
         return '{}, {}'.format(person.json()['surname'], person.json()['name'])
+
+
+if __name__ == '__main__':
+    c = Cylinder(height=10, radius=2)
+    # print('c.radius: {}'.format(c.radius))
+    # print('c.height: {}'.format(c.height))
+    print('c.volume(): {}'.format(c.volume()))
+    print('c.volume()\'s type: {}'.format(type(c.volume())))
