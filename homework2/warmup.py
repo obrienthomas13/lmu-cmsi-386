@@ -2,18 +2,18 @@ import requests
 import re
 import random
 import math
-from Crypto.Cipher import AES
+# from Crypto.Cipher import AES
 
 
 # use divmod()?
 def change(cents):
     if cents < 0:
         raise ValueError('amount cannot be negative')
-    quarters = cents // 25
-    max_quarters = quarters * 25
-    dimes = (cents - max_quarters) // 10
-    nickels = (cents - max_quarters - dimes * 10) // 5
-    return (quarters, dimes, nickels, cents % 5)
+    change = []
+    for coin in [25, 10, 5, 1]:
+        coins, cents = divmod(cents, coin)
+        change.append(coins)
+    return tuple(change)
 
 
 def strip_quotes(string):
@@ -21,13 +21,7 @@ def strip_quotes(string):
 
 
 def scramble(string):
-    result = []
-    string_array = list(string)
-    while len(string_array) > 0:
-        random_index = random.randint(0, len(string_array) - 1)
-        result.append(string_array[random_index])
-        string_array.pop(random_index)
-    return ''.join(result)
+    return ''.join(random.sample(string, len(string)))
 
 
 def say(word=None):
@@ -59,16 +53,12 @@ def powers(base, max):
 
 
 def interleave(array1, *array2):
-    initialLength = len(array1)
+    array1Clone = list(array1)
     indexInArray2 = 0
-    for i in range(0, initialLength-1):
-        if len(array2) - indexInArray2 <= 0:
-            break
-        array1.insert(indexInArray2 * 2 + 1, array2[indexInArray2])
+    for i in range(0, min(len(array1), len(array2))):
+        array1Clone.insert(indexInArray2 * 2 + 1, array2[indexInArray2])
         indexInArray2 += 1
-    for j in range(indexInArray2, len(array2)):
-        array1.insert(2 * j + 1, array2[j])
-    return array1
+    return array1Clone + list(array2[indexInArray2:len(array2)])
 
 
 class Cylinder():
