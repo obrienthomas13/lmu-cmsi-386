@@ -2,10 +2,9 @@ import requests
 import re
 import random
 import math
-# from Crypto.Cipher import AES
+from Crypto.Cipher import AES
 
 
-# use divmod()?
 def change(cents):
     if cents < 0:
         raise ValueError('amount cannot be negative')
@@ -65,6 +64,8 @@ class Cylinder():
     def __init__(self, radius=1, height=1):
         self.radius = radius
         self.height = height
+        self.volume = self.calculate_volume()
+        self.surface_area = self.calculate_surface_area()
 
     def widen(self, value):
         self.radius *= value
@@ -72,11 +73,12 @@ class Cylinder():
     def stretch(self, value):
         self.height *= value
 
-    def volume(self):
+    def calculate_volume(self):
         return math.pi * self.radius * self.radius * self.height
 
-    def surface_area(self):
-        return math.pi * self.radius * self.height * 2 + 2 * math.pi * self.radius * self.radius
+    def calculate_surface_area(self):
+        return math.pi * self.radius * self.height * 2 + (
+            2 * math.pi * self.radius * self.radius)
 
     def __repr__(self):
         return 'Cylinder with radius {} and height {}'.format(
@@ -107,9 +109,10 @@ def random_name(**data):
         return '{}, {}'.format(person.json()['surname'], person.json()['name'])
 
 
-if __name__ == '__main__':
-    c = Cylinder(height=10, radius=2)
-    # print('c.radius: {}'.format(c.radius))
-    # print('c.height: {}'.format(c.height))
-    print('c.volume(): {}'.format(c.volume()))
-    print('c.volume()\'s type: {}'.format(type(c.volume())))
+# if __name__ == '__main__':
+#     c = Cylinder(height=10, radius=2)
+#     # print('c.radius: {}'.format(c.radius))
+#     # print('c.height: {}'.format(c.height))
+#     test = c.volume
+#     print('c.volume(): {}'.format(test))
+#     print('c.volume()\'s type: {}'.format(type(c.volume())))
