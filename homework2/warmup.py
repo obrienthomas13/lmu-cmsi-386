@@ -2,16 +2,16 @@ import requests
 import re
 import random
 import math
-from Crypto.Cipher import AES
+# from Crypto.Cipher import AES
 
 
 def change(cents):
     if cents < 0:
         raise ValueError('amount cannot be negative')
     change = []
-    for coin in [25, 10, 5, 1]:
-        coins, cents = divmod(cents, coin)
-        change.append(coins)
+    for coin_value in [25, 10, 5, 1]:
+        number_of_coins, cents = divmod(cents, coin_value)
+        change.append(number_of_coins)
     return tuple(change)
 
 
@@ -52,12 +52,12 @@ def powers(base, max):
 
 
 def interleave(array1, *array2):
-    array1Clone = list(array1)
+    array1_clone = list(array1)
     indexInArray2 = 0
     for i in range(0, min(len(array1), len(array2))):
-        array1Clone.insert(indexInArray2 * 2 + 1, array2[indexInArray2])
+        array1_clone.insert(indexInArray2 * 2 + 1, array2[indexInArray2])
         indexInArray2 += 1
-    return array1Clone + list(array2[indexInArray2:len(array2)])
+    return array1_clone + list(array2[indexInArray2:len(array2)])
 
 
 class Cylinder():
