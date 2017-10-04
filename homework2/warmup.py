@@ -157,7 +157,8 @@ def random_name(**data):
     (SORRY!) Pass the URL query parameters as kwargs.
     '''
     payload = {'gender': data['gender'], 'region': data['region'], 'amount': 1}
-    person = requests.get('http://uinames.com/api/', params=payload)
-    if 'error' in person.json():
-        raise ValueError(person.text)
-    return '{}, {}'.format(person.json()['surname'], person.json()['name'])
+    uninames = requests.get('http://uinames.com/api/', params=payload)
+    person = uninames.json()
+    if 'error' in person:
+        raise ValueError(uninames.text)
+    return '{}, {}'.format(person['surname'], person['name'])
