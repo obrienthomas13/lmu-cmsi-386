@@ -64,21 +64,21 @@ class Cylinder():
     def __init__(self, radius=1, height=1):
         self.radius = radius
         self.height = height
-        self.volume = self.calculate_volume()
-        self.surface_area = self.calculate_surface_area()
+
+    @property
+    def volume(self):
+        return math.pi * self.radius * self.radius * self.height
+
+    @property
+    def surface_area(self):
+        return math.pi * self.radius * self.height * 2 + (
+            2 * math.pi * self.radius * self.radius)
 
     def widen(self, value):
         self.radius *= value
 
     def stretch(self, value):
         self.height *= value
-
-    def calculate_volume(self):
-        return math.pi * self.radius * self.radius * self.height
-
-    def calculate_surface_area(self):
-        return math.pi * self.radius * self.height * 2 + (
-            2 * math.pi * self.radius * self.radius)
 
     def __repr__(self):
         return 'Cylinder with radius {} and height {}'.format(
@@ -107,12 +107,3 @@ def random_name(**data):
         raise ValueError(person.text)
     else:
         return '{}, {}'.format(person.json()['surname'], person.json()['name'])
-
-
-# if __name__ == '__main__':
-#     c = Cylinder(height=10, radius=2)
-#     # print('c.radius: {}'.format(c.radius))
-#     # print('c.height: {}'.format(c.height))
-#     test = c.volume
-#     print('c.volume(): {}'.format(test))
-#     print('c.volume()\'s type: {}'.format(type(c.volume())))
