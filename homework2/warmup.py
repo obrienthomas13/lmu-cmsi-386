@@ -3,6 +3,7 @@
 import re
 import random
 import math
+from itertools import zip_longest
 import requests
 from Crypto.Cipher import AES
 
@@ -91,12 +92,8 @@ def interleave(array1, *array2):
     length is not the same as the number of values to interleave, the extra
     elements should end up at the end of the result.
     '''
-    array1_clone = list(array1)
-    index_in_array1 = 0
-    while index_in_array1 < min(len(array1), len(array2)):
-        array1_clone.insert(index_in_array1 * 2 + 1, array2[index_in_array1])
-        index_in_array1 += 1
-    return array1_clone + list(array2[index_in_array1:len(array2)])
+    longest = zip_longest(array1, array2)
+    return [item for tuples in longest for item in tuples if item is not None]
 
 
 class Cylinder:
