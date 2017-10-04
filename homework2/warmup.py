@@ -160,5 +160,4 @@ def random_name(**data):
     person = requests.get('http://uinames.com/api/', params=payload)
     if 'error' in person.json():
         raise ValueError(person.text)
-    else:
-        return '{}, {}'.format(person.json()['surname'], person.json()['name'])
+    return '{}, {}'.format(person.json()['surname'], person.json()['name'])
