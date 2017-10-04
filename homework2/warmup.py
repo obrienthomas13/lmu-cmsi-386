@@ -65,11 +65,11 @@ def triples(max_hypotenuse):
     if max_hypotenuse < 0:
         raise ValueError('amount cannot be negative')
     triple_list = []
-    for c in range(1, max_hypotenuse + 1):
-        for b in range(1, c):
-            for a in range(1, b):
-                if a * a + b * b == c * c:
-                    triple_list.append((a, b, c))
+    for side_c in range(1, max_hypotenuse + 1):
+        for side_b in range(1, side_c):
+            for side_a in range(1, side_b):
+                if side_a * side_a + side_b * side_b == side_c * side_c:
+                    triple_list.append((side_a, side_b, side_c))
     triple_list.sort()
     return triple_list
 
@@ -93,13 +93,13 @@ def interleave(array1, *array2):
     '''
     array1_clone = list(array1)
     index_in_array1 = 0
-    for i in range(0, min(len(array1), len(array2))):
+    while index_in_array1 < min(len(array1), len(array2)):
         array1_clone.insert(index_in_array1 * 2 + 1, array2[index_in_array1])
         index_in_array1 += 1
     return array1_clone + list(array2[index_in_array1:len(array2)])
 
 
-class Cylinder():
+class Cylinder:
     "A cylinder class with a radius, height, and several methods"
     def __init__(self, radius=1, height=1):
         self.radius = radius
