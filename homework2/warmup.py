@@ -158,7 +158,7 @@ def random_name(**data):
     '''
     payload = {'gender': data['gender'], 'region': data['region'], 'amount': 1}
     uninames = requests.get('http://uinames.com/api/', params=payload)
-    person = uninames.json()
-    if 'error' in person:
+    if not uninames.ok:
         raise ValueError(uninames.text)
+    person = uninames.json()
     return '{}, {}'.format(person['surname'], person['name'])
