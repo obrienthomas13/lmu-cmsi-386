@@ -32,9 +32,6 @@ int main() {
 
     for(int i = 0; i < potato.size(); i++) {
       cout << potato[i].first << " : " << potato[i].second <<  '\n';
-
     }
-
-
 	// cout<<"Vector " << sclone;
 }
