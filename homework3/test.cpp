@@ -24,6 +24,10 @@ int main() {
       if(sclone.at(current) == ' '&& prev != current){
         potato.push_back(make_pair(sclone.substr(prev, current-prev), 1));
         prev = current + 1;
+        current ++;
+      }
+      if(prev == current && sclone.at(current) == ' '){
+        prev++;
       }
       current ++;
     }
