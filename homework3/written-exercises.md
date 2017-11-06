@@ -30,11 +30,64 @@ double *b[4];
 for (int i = 0; i < 4; i++) {
   b[i] = &a[i];
 }
-assert(b[0] == 0x7fff517b48d0)
-assert(&b[0] == 0x7fff517b48b0)
-assert(*b[0] == 1232.2)
-assert(b[1] == 0x7fff517b48d8)
-assert(&b[1] == 0x7fff517b48b8)
-assert(*b[1] == 400.21)
+assert(b[0] == 0x7fff517b48d0);
+assert(&b[0] == 0x7fff517b48b0);
+assert(*b[0] == 1232.2);
+assert(b[1] == 0x7fff517b48d8);
+assert(&b[1] == 0x7fff517b48b8);
+assert(*b[1] == 400.21);
 // And so on...
+```
+
+### Question 5
+
+The result of the following program is as follows.
+```shell
+>>> g++ -std=c++14 question5.cpp && ./a.out
+2
+5
+2
+```
+
+The reason for this output is due to C++ being **statically scoped**. In a statically scoped language, the value of a function or variable depends both on the location of the source code and where named function or variable is defined within the program. Look at the C++ program, **int x** is first defined global at the beginning of the program. After the function **f()** simply prints out x, which is equal to **2** at declaration. Next, the function **g()** defined **int x** internally to be equal to **5**, calls the function **f()**, and then prints out x. When the function **f()** is called within **g()**, **f()** will still print out **2**, despite **int x** being equal to **5** within **g()**. This is due to function **f()** printing **2** at declaration, thus this cannot change. However, when function **g()** prints out x in the end, this prints out **5** due to **int x** being modified within the scope of function **g()**. Lastly within, the function **main()**, after calling function **g()** and printing out the previously described results, **main()** prints out x as well. In this case since **int x** is not internally called within the function **main()**, the program looks up one level of hierarchy and sees **int x** equal to 2, thus printing out 2. This same behavior can be replicated in Javascript, another statically scoped language.
+
+```js
+let x = 2;
+const f = () => { console.log(x); };
+const g = () => { let x = 5; f(); console.log(x); };
+g();
+console.log(x);
+```
+```shell
+>>> node question5.js
+2
+5
+2
+```
+
+If C++ were to be a **dynamically scoped** language, then the output would be the following.
+
+```shell
+>>> g++ -std=c++14 question5.cpp && ./a.out
+5
+5
+5
+```
+
+The reason for this is that the value of **int x** within the various functions would not be necessarily defined at declaration. When the function **g()** is called within the function **main()**, this would then modify **int x** to be equal to 5. Then when function **f()** is called within **g()**, **f()** would print out 5 instead due to the value being modified. The print statement within **g()** would still print out 5. Back to the function **main()**, the print statement would now print 5 again due to **int x** being modified within the call to function **g()**.
+
+This behavior can also be seen in Perl, a programming language that is dynamically scoped.
+
+```perl
+$x = 2;
+sub f { print "$x\n"; }
+sub g { $x = 5; f(); print "$x\n"; }
+g();
+print "$x\n";
+```
+```shell
+>>> perl question5.pl
+5
+5
+5
 ```
