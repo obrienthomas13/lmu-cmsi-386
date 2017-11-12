@@ -39,6 +39,19 @@ assert(*b[1] == 400.21);
 // And so on...
 ```
 
+### Question 4
+
+A **Derived** object will contain two **b** fields. Not only that, but both **b** fields from a **Derived** object and its parent **Base** class are accessible. It is important to note that since both **b** fields are public, they are capable of being accessed and manipulated. Looking at the code snippet below, the second line is how to get the **b** field from the **Derived** class while the third line is the **b** field from the **Base** class.
+
+```c++
+Derived sampleDerived = Derived();
+// sampleDerived.b
+// sampleDerived.Base::b
+```
+Since the field **b** within the **Derived** class is a public field, a programmer is able to directly access and manipulate it through the dot notation.
+
+To gain access to the field **b** within the **Base** class is more tricky. This **b** is not in the direct scope of a **Derived** object, but rather in its parent class **Base**. To gain access, the programming must use the dot notation and then refer specifically to the scope of the **Base** class by using _Base::_. Now since the previous statement refers to the scope of the **Base** class, the programmer can access and manipulate the proper field **b**.
+
 ### Question 5
 
 The result of the following program is as follows.
