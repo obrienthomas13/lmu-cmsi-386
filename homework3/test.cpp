@@ -15,23 +15,49 @@ class Queue {
   Node* tail = nullptr;
   Node* head = nullptr;
 
-  Node* copy(Node* n) {
-    delete;
-    return new Node {n->data, n->next ? copy(n->next) : nullptr};
-  }
+  // Node* copy(Node* n) {
+  //   return new Node {n->data, n->next ? copy(n->next) : nullptr};
+  // }
 
 
 public:
-
-  Queue(const Queue& a) = delete;
-  void operator=(const Queue& a) = delete;
-  ~Queue() {
-    while (head != nullptr) {
-      pop();
-    }
-  }
-
+  // initial assignment
   Queue() = default;
+  // copy constructor
+  Queue(const Queue& a) = delete;
+  // copy assignment
+  void operator=(const Queue& a) = delete;
+
+  // move constructor
+  // Queue(Queue&& other): data(other.data), next(other.next) {
+  //   // other.data = nullptr;
+  //   other.next = nullptr;
+  // }
+
+  // move assignment
+  // Queue& operator=(Queue&& other) {
+  //   if (&other == this) {
+  //     return *this;
+  //   }
+  //   delete next;
+  //   data = other.data;
+  //   next = other.next;
+  //   other.next = nullptr;
+  //   return *this;
+  // }
+
+  // deconstructor
+  ~Queue() {
+    cout << "head->data: " << head->data << "\n";
+    cout << "tail->data: " << tail->data << "\n";
+    cout << "size: " << size << "\n";
+    while (head != nullptr) {
+      dequeue();
+    }
+    cout << "size: " << size << "\n";
+    cout << "tail->data: " << tail->data << "\n";
+    // delete tail;
+  }
 
   int get_size() {
     return size;
@@ -41,22 +67,33 @@ public:
     return tail->data;
   }
 
+  T get_head() {
+    return head->data;
+  }
+
   void enqueue(T x) {
-    Node newTail = new Node {x, tail};
-    tail = &newTail;
+    Node* newTail = new Node {x, nullptr};
+    if (tail != nullptr) {
+      tail->next = newTail;
+    } else {
+      head = newTail;
+    }
+    tail = newTail;
     size++;
   }
 
   T dequeue() {
-    Node* nodeToDelete = head;
+    // cout << "Running dequeue\n";
+    Node* newHead = head->next;
     T valueToReturn = head->data;
-    delete nodeToDelete;
-
-    Node findNewHead = *tail;
-    while(findNewHead.next != nullptr) {
-      findNewHead = *(findNewHead.next);
-    }
-    head = &findNewHead;
+    // if (head == tail) {
+    //   cout << "I'M HAPPENING\n";
+    //   delete tail;
+    // }
+    // cout << "1\n";
+    delete head;
+    // cout << "2\n";
+    head = newHead;
     size--;
     return valueToReturn;
   }
@@ -64,20 +101,48 @@ public:
 };
 
 int main() {
-  Queue<int> s;
-  assert(s.get_size() == 0);
-  s.enqueue(100);
-  assert(s.get_tail() == 100);
-  assert(s.get_size() == 1);
-  s.enqueue(200);
-  assert(s.get_tail() == 200);
-  assert(s.get_size() == 2);
-  assert(s.dequeue() == 200);
-  assert(s.get_size() == 1);
-  assert(s.dequeue() == 100);
-  assert(s.get_size() == 0);
-  s.enqueue(300);
-  s.enqueue(400);
+  // Queue<int> s;
+  // assert(s.get_size() == 0);
+  // s.enqueue(100);
+  // assert(s.get_tail() == 100);
+  // assert(s.get_head() == 100);
+  // assert(s.get_size() == 1);
+  // s.enqueue(200);
+  // assert(s.get_tail() == 200);
+  // assert(s.get_head() == 100);
+  // assert(s.get_size() == 2);
+  // s.enqueue(300);
+  // assert(s.get_tail() == 300);
+  // assert(s.get_head() == 100);
+  // assert(s.get_size() == 3);
+  // s.enqueue(400);
+  // assert(s.get_tail() == 400);
+  // assert(s.get_head() == 100);
+  // assert(s.get_size() == 4);
+  // s.enqueue(500);
+  // assert(s.get_tail() == 500);
+  // assert(s.get_head() == 100);
+  // assert(s.get_size() == 5);
+  // s.dequeue();
+  // s.dequeue();
+  // s.dequeue();
+  // s.dequeue();
+  // s.dequeue();
+  // cout << "before enqueue\n";
+  // // s.enqueue(2);
+  // cout << "after enqueue\n";
+  // assert(s.get_tail() == 2);
+  // cout << "tail\n";
+  // assert(s.get_head() == 2);
+  // cout << "head\n";
+  // assert(s.get_size() == 1);
+  // cout << "size\n";
+  // assert(s.dequeue() == 200);
+  // assert(s.get_size() == 1);
+  // assert(s.dequeue() == 100);
+  // assert(s.get_size() == 0);
+  // s.enqueue(300);
+  // s.enqueue(400);
 
   cout << "All tests passed\n";
 
