@@ -27,25 +27,25 @@ public:
   Queue(const Queue& a) = delete;
   // copy assignment
   void operator=(const Queue& a) = delete;
-
   // move constructor
-  // Queue(Queue&& other): data(other.data), next(other.next) {
-  //   // other.data = nullptr;
-  //   other.next = nullptr;
-  // }
-
+  Queue(Queue&& other): size(other.size), tail(other.tail), head(other.head) {
+    other.tail = nullptr;
+    other.head = nullptr;
+  }
   // move assignment
-  // Queue& operator=(Queue&& other) {
-  //   if (&other == this) {
-  //     return *this;
-  //   }
-  //   delete next;
-  //   data = other.data;
-  //   next = other.next;
-  //   other.next = nullptr;
-  //   return *this;
-  // }
-
+  Queue& operator=(Queue&& other) {
+    if (&other == this) {
+      return *this;
+    }
+    delete tail;
+    delete head;
+    size = other.size;
+    tail = other.tail;
+    head = other.head;
+    other.tail = nullptr;
+    other.head = nullptr;
+    return *this;
+  }
   // deconstructor
   ~Queue() {
     cout << "head->data: " << head->data << "\n";
@@ -101,35 +101,35 @@ public:
 };
 
 int main() {
-  // Queue<int> s;
-  // assert(s.get_size() == 0);
-  // s.enqueue(100);
-  // assert(s.get_tail() == 100);
-  // assert(s.get_head() == 100);
-  // assert(s.get_size() == 1);
-  // s.enqueue(200);
-  // assert(s.get_tail() == 200);
-  // assert(s.get_head() == 100);
-  // assert(s.get_size() == 2);
-  // s.enqueue(300);
-  // assert(s.get_tail() == 300);
-  // assert(s.get_head() == 100);
-  // assert(s.get_size() == 3);
-  // s.enqueue(400);
-  // assert(s.get_tail() == 400);
-  // assert(s.get_head() == 100);
-  // assert(s.get_size() == 4);
-  // s.enqueue(500);
-  // assert(s.get_tail() == 500);
-  // assert(s.get_head() == 100);
-  // assert(s.get_size() == 5);
-  // s.dequeue();
-  // s.dequeue();
-  // s.dequeue();
-  // s.dequeue();
+  Queue<int> s;
+  assert(s.get_size() == 0);
+  s.enqueue(100);
+  assert(s.get_tail() == 100);
+  assert(s.get_head() == 100);
+  assert(s.get_size() == 1);
+  s.enqueue(200);
+  assert(s.get_tail() == 200);
+  assert(s.get_head() == 100);
+  assert(s.get_size() == 2);
+  s.enqueue(300);
+  assert(s.get_tail() == 300);
+  assert(s.get_head() == 100);
+  assert(s.get_size() == 3);
+  s.enqueue(400);
+  assert(s.get_tail() == 400);
+  assert(s.get_head() == 100);
+  assert(s.get_size() == 4);
+  s.enqueue(500);
+  assert(s.get_tail() == 500);
+  assert(s.get_head() == 100);
+  assert(s.get_size() == 5);
+  s.dequeue();
+  s.dequeue();
+  s.dequeue();
+  s.dequeue();
   // s.dequeue();
   // cout << "before enqueue\n";
-  // // s.enqueue(2);
+  // s.enqueue(2);
   // cout << "after enqueue\n";
   // assert(s.get_tail() == 2);
   // cout << "tail\n";
