@@ -1,7 +1,6 @@
-#include <cassert>
-#include <iostream>
-
-using namespace std;
+// #include <cassert>
+// #include <iostream>
+// using namespace std;
 
 template <typename T>
 class Queue {
@@ -21,23 +20,44 @@ class Queue {
 
 
 public:
-
+  // initial assignment
+  Queue() = default;
+  // copy constructor
   Queue(const Queue& a) = delete;
+  // copy assignment
   void operator=(const Queue& a) = delete;
-
+  // move constructor
+  Queue(Queue&& other): size(other.size), tail(other.tail), head(other.head) {
+    other.tail = nullptr;
+    other.head = nullptr;
+  }
+  // move assignment
+  Queue& operator=(Queue&& other) {
+    if (&other == this) {
+      return *this;
+    }
+    delete tail;
+    delete head;
+    size = other.size;
+    tail = other.tail;
+    head = other.head;
+    other.tail = nullptr;
+    other.head = nullptr;
+    return *this;
+  }
+  // deconstructor
   ~Queue() {
-    cout << "head->data: " << head->data << "\n";
-    cout << "tail->data: " << tail->data << "\n";
-    cout << "size: " << size << "\n";
+    // cout << "head->data: " << head->data << "\n";
+    // cout << "tail->data: " << tail->data << "\n";
+    // cout << "size: " << size << "\n";
     while (head != nullptr) {
+      // cout << "inside while loop\n";
       dequeue();
     }
-    cout << "size: " << size << "\n";
-    cout << "tail->data: " << tail->data << "\n";
+    // cout << "size: " << size << "\n";
+    // cout << "tail->data: " << tail->data << "\n";
     // delete tail;
   }
-
-  Queue() = default;
 
   int get_size() {
     return size;

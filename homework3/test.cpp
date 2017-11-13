@@ -48,14 +48,15 @@ public:
   }
   // deconstructor
   ~Queue() {
-    cout << "head->data: " << head->data << "\n";
-    cout << "tail->data: " << tail->data << "\n";
-    cout << "size: " << size << "\n";
+    // cout << "head->data: " << head->data << "\n";
+    // cout << "tail->data: " << tail->data << "\n";
+    // cout << "size: " << size << "\n";
     while (head != nullptr) {
+      cout << "inside while loop\n";
       dequeue();
     }
-    cout << "size: " << size << "\n";
-    cout << "tail->data: " << tail->data << "\n";
+    // cout << "size: " << size << "\n";
+    // cout << "tail->data: " << tail->data << "\n";
     // delete tail;
   }
 
@@ -83,16 +84,16 @@ public:
   }
 
   T dequeue() {
-    // cout << "Running dequeue\n";
+    cout << "Running dequeue\n";
     Node* newHead = head->next;
     T valueToReturn = head->data;
     // if (head == tail) {
     //   cout << "I'M HAPPENING\n";
     //   delete tail;
     // }
-    // cout << "1\n";
+    cout << "1\n";
     delete head;
-    // cout << "2\n";
+    cout << "2\n";
     head = newHead;
     size--;
     return valueToReturn;
@@ -127,11 +128,11 @@ int main() {
   s.dequeue();
   s.dequeue();
   s.dequeue();
-  // s.dequeue();
-  // cout << "before enqueue\n";
-  // s.enqueue(2);
-  // cout << "after enqueue\n";
-  // assert(s.get_tail() == 2);
+  s.dequeue();
+  cout << "before enqueue\n";
+  s.enqueue(2);
+  cout << "after enqueue\n";
+  assert(s.get_tail() == 2);
   // cout << "tail\n";
   // assert(s.get_head() == 2);
   // cout << "head\n";
