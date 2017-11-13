@@ -85,6 +85,9 @@ public:
 
   T dequeue() {
     cout << "Running dequeue\n";
+    if (head == nullptr) {
+      throw std::underflow_error("Empty queue");
+    }
     Node* newHead = head->next;
     T valueToReturn = head->data;
     // if (head == tail) {
