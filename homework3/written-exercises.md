@@ -39,6 +39,20 @@ assert(*b[1] == 400.21);
 // And so on...
 ```
 
+```c++
+double (*b)[n];
+```
+(&ast;b)[n] creates a pointer to an empty array of double values that has a length of n. The behavior is shown below.
+
+```c++
+double (*b)[4];
+assert((*b)[0] == 0);
+assert(&(*b)[0] == 0x7fff5074f838);
+assert((*b)[1] == 4.94066e-324);
+assert(&(*b)[1] == 0x7fff5074f840);
+// And so on...
+```
+
 ### Question 4
 
 A **Derived** object will contain two **b** fields. Not only that, but both **b** fields from a **Derived** object and its parent **Base** class are accessible. It is important to note that since both **b** fields are public, they are capable of being accessed and manipulated. Looking at the code snippet below, the second line is how to get the **b** field from the **Derived** class while the third line is the **b** field from the **Base** class.
