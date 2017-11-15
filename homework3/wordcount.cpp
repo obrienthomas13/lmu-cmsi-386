@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <stdexcept>
+#include <algorithm>
 
 using namespace std;
 
@@ -16,10 +17,14 @@ int findIndex(vector< pair <string, int> > vec, string s){
   return -1;
 }
 
+bool sortFunction(const pair<string, int> &a, const pair<string, int> &b) {
+  return a.second>b.second;
+}
 
 int main() {
 
-    string s = "Hello ha8pPy h/;^e78llo  23a8g a    da3^a#$y m8e hello";
+    string s;
+    getline(cin, s);
 
     vector< pair <string, int> > vec;
 
@@ -51,8 +56,10 @@ int main() {
       current ++;
     }
 
-    // Prints out the  whole vector
+    sort(vec.begin(), vec.end(), sortFunction);
+
+    // Prints out the whole vector
     for(int i = 0; i < vec.size(); i++) {
-      cout << vec[i].first << " : " << vec[i].second <<  '\n';
+      cout << vec[i].first << " " << vec[i].second <<  '\n';
     }
 }
