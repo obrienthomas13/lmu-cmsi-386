@@ -18,14 +18,13 @@ int findIndex(vector< pair <string, int> > vec, string s){
 }
 
 bool sortFunction(const pair<string, int> &a, const pair<string, int> &b) {
-  return a.second>b.second;
+  return a.second > b.second;
 }
 
 int main() {
 
     string s;
     getline(cin, s);
-
     vector< pair <string, int> > vec;
 
     // Changes the string into lower case

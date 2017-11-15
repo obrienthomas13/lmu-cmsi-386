@@ -155,8 +155,7 @@ print "$x\n";
 
 ### Question 6
 
-```
-
+```c++
 // This is the function signature for a raw array
 template <typename T>
 void scramble(T theArray[], int size) {}
@@ -164,8 +163,7 @@ void scramble(T theArray[], int size) {}
 // This is a function signature for a std::array
 template <typename Y, size_t N>
 void scramble(std::array<Y, N>& theArray) {}
-
 ```
 
 In C++, **raw arrays** are just pointers to a memory address. They do not store a size value, so you must pass size in as a parameter.
-**std::array**s, on the other hand, have **size()** as a function. Though when defining the function signature, it requires you define the size. We must use a template *size_t* named *N* to allow variable sized **std:arrays** to be passed in.
+**std::array**s, on the other hand, have **size()** as a function. Though when defining the function signature, it requires you define the size. We must use a template *size_t* named *N* to allow variable sized **std:array**s to be passed in.
