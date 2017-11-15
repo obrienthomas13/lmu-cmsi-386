@@ -1,4 +1,4 @@
-# Tyler Edmiston and Thomas O'Brien Homework 3
+# Tyler Edmiston, Thomas O'Brien and Eddie Azinge Homework 3
 
 ### Question 1
 
@@ -52,6 +52,40 @@ assert((*b)[1] == 4.94066e-324);
 assert(&(*b)[1] == 0x7fff5074f840);
 // And so on...
 ```
+
+```c++
+double (*c[n])();
+```
+((&ast;c[n])() creates an array of n pointers to functions that return doubles.
+
+```c++
+double (*d())[n];
+```
+(&ast;d())[n] creates a function that returns a pointer to an array of n doubles.
+
+### Question 3
+
+```c++
+double (*f(double (*)(double, double[]), double)) (double, ...);
+```
+
+This declaration is easier when viewed as 3 separate parts.
+
+`double (*) (double, double[])`
+
+describes a function pointer that accepts a double and a double array and returns a double.
+
+We'll call this function pointer innerFunction.
+
+`*f(innerFunction, double)`
+
+creates a pointer to a function called f that accepts a function pointer (defined by innerFunction) and a double, with it's return type specified by the next part.
+
+We'll call this intermediary state outerFunction
+
+`double (outerFunction) (double, ...)`
+
+modifies the return type of f to be a function that accepts a double followed by a variable number of arguments.
 
 ### Question 4
 
@@ -128,7 +162,7 @@ template <typename T>
 void scramble(T theArray[], int size) {}
 
 // This is a function signature for a std::array
-template<typename Y, size_t N>
+template <typename Y, size_t N>
 void scramble(std::array<Y, N>& theArray) {}
 
 ```
