@@ -4,37 +4,22 @@ using namespace std;
 
 template <typename T>
 class Queue {
-
   struct Node {
     T data;
     Node* next;
   };
-
   int size = 0;
   Node* tail = nullptr;
   Node* head = nullptr;
 
-  // Node* copy(Node* n) {
-  //   return new Node {n->data, n->next ? copy(n->next) : nullptr};
-  // }
-
-
 public:
-  // initial assignment
   Queue() = default;
-  // copy constructor
   Queue(const Queue& a) = delete;
-  // copy assignment
   void operator=(const Queue& a) = delete;
-
-
-
-  // move constructor
   Queue(Queue&& other): size(other.size), tail(other.tail), head(other.head) {
     other.tail = nullptr;
     other.head = nullptr;
   }
-  // move assignment
   Queue& operator=(Queue&& other) {
     if (&other == this) {
       return *this;
@@ -48,18 +33,10 @@ public:
     other.head = nullptr;
     return *this;
   }
-  // deconstructor
   ~Queue() {
-    // cout << "head->data: " << head->data << "\n";
-    // cout << "tail->data: " << tail->data << "\n";
-    // cout << "size: " << size << "\n";
     while (head != nullptr) {
-      // cout << "inside while loop\n";
       dequeue();
     }
-    // cout << "size: " << size << "\n";
-    // cout << "tail->data: " << tail->data << "\n";
-    // delete tail;
   }
 
   friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
@@ -80,19 +57,16 @@ public:
   }
 
   T get_tail() {
-    // cout << "tail: " << tail << "\n";
     if (tail == nullptr) {
-      throw std::underflow_error("Empty queue");
+      throw std::underflow_error("No tail");
     }
-    // cout << "tail: " << tail << "\n";
     return tail->data;
   }
 
   T get_head() {
     if (head == nullptr) {
-      throw std::underflow_error("Empty queue");
+      throw std::underflow_error("No head");
     }
-    // cout << "head: " << head << "\n";
     return head->data;
   }
 
@@ -113,14 +87,9 @@ public:
     }
     Node* newHead = head->next;
     T valueToReturn = head->data;
-
     delete head;
     head = newHead;
-    // if (head->next == nullptr) {
-    //   tail = newHead;
-    // }
     size--;
     return valueToReturn;
   }
-
 };
