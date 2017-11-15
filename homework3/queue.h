@@ -62,32 +62,41 @@ public:
     // delete tail;
   }
 
-  friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
-    cout << "1\n";
-    Node* tempHead = Q.head;
-    cout << "2\n";
-    while(tempHead.next != nullptr) {
-      os << tempHead.data << " ";
-      tempHead = tempHead.next;
-    }
-    return os;
-  }
+  // friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
+  //   cout << "1\n";
+  //   Node* tempHead = Q.head;
+  //   cout << "2\n";
+  //   while(tempHead.next != nullptr) {
+  //     os << tempHead->data << " ";
+  //     tempHead = tempHead->next;
+  //   }
+  //   return os;
+  // }
 
   int get_size() {
     return size;
   }
 
   T get_tail() {
+    // cout << "tail: " << tail << "\n";
+    if (tail == nullptr) {
+      throw std::underflow_error("Empty queue");
+    }
+    // cout << "tail: " << tail << "\n";
     return tail->data;
   }
 
   T get_head() {
+    if (head == nullptr) {
+      throw std::underflow_error("Empty queue");
+    }
+    // cout << "head: " << head << "\n";
     return head->data;
   }
 
   void enqueue(T x) {
     Node* newTail = new Node {x, nullptr};
-    if (tail != nullptr) {
+    if (head != nullptr) {
       tail->next = newTail;
     } else {
       head = newTail;
@@ -97,20 +106,17 @@ public:
   }
 
   T dequeue() {
-    // cout << "Running dequeue\n";
     if (head == nullptr) {
       throw std::underflow_error("Empty queue");
     }
     Node* newHead = head->next;
     T valueToReturn = head->data;
-    // if (head == tail) {
-    //   cout << "I'M HAPPENING\n";
-    //   delete tail;
-    // }
-    // cout << "1\n";
+
     delete head;
-    // cout << "2\n";
     head = newHead;
+    // if (head->next == nullptr) {
+    //   tail = newHead;
+    // }
     size--;
     return valueToReturn;
   }
