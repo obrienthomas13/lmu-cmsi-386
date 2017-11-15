@@ -1,8 +1,7 @@
-// #include <cassert>
-// #include <iostream>
-// using namespace std;
+#include <cassert>
 #include <iostream>
 using namespace std;
+
 template <typename T>
 class Queue {
 
@@ -28,7 +27,7 @@ public:
   // copy assignment
   void operator=(const Queue& a) = delete;
 
-  friend ostream& operator<<(ostream& os, const Queue& Q);
+
 
   // move constructor
   Queue(Queue&& other): size(other.size), tail(other.tail), head(other.head) {
@@ -61,6 +60,17 @@ public:
     // cout << "size: " << size << "\n";
     // cout << "tail->data: " << tail->data << "\n";
     // delete tail;
+  }
+
+  friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
+    cout << "1\n";
+    Node* tempHead = Q.head;
+    cout << "2\n";
+    while(tempHead.next != nullptr) {
+      os << tempHead.data << " ";
+      tempHead = tempHead.next;
+    }
+    return os;
   }
 
   int get_size() {
@@ -105,13 +115,4 @@ public:
     return valueToReturn;
   }
 
-
 };
-
-ostream& operator<<(ostream& os, const Queue& Q) {
-  Node* tempHead = Q.head;
-  while(tempHead.next != nullptr) {
-    os << tempHead.data << " ";
-  }
-  return os;
-}
