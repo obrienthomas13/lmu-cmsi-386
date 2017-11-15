@@ -5,6 +5,11 @@
 
 using namespace std;
 
+/*
+ * There is no way to test for copying or assignment being prohibited in the unit test.
+ * This is because both are compile time errors, so we cannot test for these errors.
+ */
+
 void test_empty_queue_has_zero_size() {
   Queue<string> q;
   assert(q.get_size() == 0);
