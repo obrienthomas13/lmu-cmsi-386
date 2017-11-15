@@ -101,14 +101,14 @@ If C++ were to be a **dynamically scoped** language, then the output would be th
 5
 ```
 
-The reason for this is that the value of **int x** within the various functions would not be necessarily defined at declaration. When the function **g()** is called within the function **main()**, this would then modify **int x** to be equal to 5. Then when function **f()** is called within **g()**, **f()** would print out 5 instead due to the value being modified. The print statement within **g()** would still print out 5. Back to the function **main()**, the print statement would now print 5 again due to **int x** being modified within the call to function **g()**.
+The reason for this is that the value of **int x** within the various functions would not be necessarily defined at declaration. When the function **g()** is called within the function **main()**, this would then modify **int x** to be equal to 5. Then when function **f()** is called within **g()**, **f()** would print out 5 instead due to the value being modified. The print statement within **g()** would still print out 5. Back to the function **main()**, the print statement would now print 2 due to the initial **int x** being set to it and never being modified within that scope.
 
 This behavior can also be seen in Perl, a programming language that is dynamically scoped.
 
 ```perl
-$x = 2;
+local $x = 2;
 sub f { print "$x\n"; }
-sub g { $x = 5; f(); print "$x\n"; }
+sub g { local $x = 5; f(); print "$x\n"; }
 g();
 print "$x\n";
 ```
@@ -116,7 +116,7 @@ print "$x\n";
 >>> perl question5.pl
 5
 5
-5
+2
 ```
 
 ### Question 6
