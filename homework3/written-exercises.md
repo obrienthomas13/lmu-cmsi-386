@@ -132,7 +132,7 @@ If C++ were to be a **dynamically scoped** language, then the output would be th
 >>> g++ -std=c++14 question5.cpp && ./a.out
 5
 5
-5
+2
 ```
 
 The reason for this is that the value of **int x** within the various functions would not be necessarily defined at declaration. When the function **g()** is called within the function **main()**, this would then modify **int x** to be equal to 5. Then when function **f()** is called within **g()**, **f()** would print out 5 instead due to the value being modified. The print statement within **g()** would still print out 5. Back to the function **main()**, the print statement would now print 2 due to the initial **int x** being set to it and never being modified within that scope.
