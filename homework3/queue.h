@@ -62,16 +62,18 @@ public:
     // delete tail;
   }
 
-  // friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
-  //   cout << "1\n";
-  //   Node* tempHead = Q.head;
-  //   cout << "2\n";
-  //   while(tempHead.next != nullptr) {
-  //     os << tempHead->data << " ";
-  //     tempHead = tempHead->next;
-  //   }
-  //   return os;
-  // }
+  friend std::ostream& operator<< (std::ostream& os, const Queue& Q){
+    Node* tempHead = Q.head;
+    if(tempHead != nullptr) {
+        os << tempHead->data << " ";
+
+    }
+    while(tempHead->next != nullptr) {
+      tempHead = tempHead->next;
+      os << tempHead->data << " ";
+    }
+    return os;
+  }
 
   int get_size() {
     return size;
