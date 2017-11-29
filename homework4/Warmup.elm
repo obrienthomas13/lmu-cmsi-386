@@ -1,16 +1,18 @@
 module Warmup exposing (..)
+import Regex exposing (..)
 
-change: String -> Int
-change s = 0
+change: Int -> (Int, Int, Int, Int)
+change s = (0, 0, 0, 0)
 
-stripQuotes: String -> Int
-stripQuotes s = 0
+stripQuotes: String -> String
+stripQuotes =
+  Regex.replace Regex.All (Regex.regex "[\'\"]") (\_ -> "")
 
-powers: String -> Int
-powers s = 0
+powers: Int -> Int -> List Int
+powers base maxValue = [0]
 
-sumOfCubesOfOdds: String -> Int
-sumOfCubesOfOdds s = 0
+sumOfCubesOfOdds: List Int -> Int
+sumOfCubesOfOdds intList = 0
 
-daysBetween: String -> Int
-daysBetween s = 0
+daysBetween: String -> String -> Int
+daysBetween start end = 0
