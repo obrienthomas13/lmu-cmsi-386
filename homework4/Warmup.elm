@@ -1,5 +1,6 @@
 module Warmup exposing (..)
 import Regex exposing (..)
+import Arithmetic exposing (..)
 
 change: Int -> Result String (Int, Int, Int, Int)
 change cents =
@@ -22,7 +23,8 @@ powers: Int -> Int -> List Int
 powers base maxValue = [0]
 
 sumOfCubesOfOdds: List Int -> Int
-sumOfCubesOfOdds intList = 0
+sumOfCubesOfOdds intList =
+  List.foldr (+) 0 <| List.map (\x -> x^3) <| List.filter isOdd intList
 
 daysBetween: String -> String -> Int
 daysBetween start end = 0
