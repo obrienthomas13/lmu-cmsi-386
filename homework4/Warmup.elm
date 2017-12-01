@@ -51,46 +51,16 @@ sumOfCubesOfOdds intList =
 
 daysBetween: String -> String -> Result String Int
 daysBetween start end =
-  let startDate = Date.fromString start
-  in case startDate of
-    Ok result -> result
-    Err msg -> msg
-
-    -- case Date.fromString start of
-    --   Err msg ->
-    --     msg
-    --   Ok result ->
-    --     let
-    --       startDate = result
-    --     in
-    --       case Date.fromString end of
-    --         Err msg ->
-    --           msg
-    --         Ok result ->
-    --           let
-    --             endDate = result
-    --           in
-    --             Date.Extra.Duration.diffDays endDate startDate
-
-  -- let
-  --   case Date.fromString start of
-  --     Err msg ->
-  --       msg
-  --     Ok result ->
-  --       startDate = result
-  --   case Date.fromString end of
-  --     Err msg ->
-  --       msg
-  --     Ok result ->
-  --       endDate = result
-  -- in
-  --   Date.Extra.Duration.diffDays endDate startDate
-
-  -- ========================================================
-  -- Will pass Toal's tests, but it's wrong
-  -- ========================================================
-  -- let
-  --   startDate = Date.fromString start |> Result.withDefault (Date.fromTime 0)
-  --   endDate = Date.fromString end |> Result.withDefault (Date.fromTime 0)
-  -- in
-  --   Ok <| Date.Extra.Duration.diffDays endDate startDate
+  let
+    startDate = Date.fromString start
+    endDate = Date.fromString end
+  in
+    case startDate of
+      Ok start ->
+        case endDate of
+          Ok end ->
+            Ok <| Date.Extra.Duration.diffDays end start
+          Err msg ->
+            Err "Bad data"
+      Err msg ->
+        Err "Bad data"
