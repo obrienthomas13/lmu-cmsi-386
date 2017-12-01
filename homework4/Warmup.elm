@@ -55,12 +55,24 @@ daysBetween start end =
     startDate = Date.fromString start
     endDate = Date.fromString end
   in
-    case startDate of
-      Ok start ->
-        case endDate of
-          Ok end ->
-            Ok <| Date.Extra.Duration.diffDays end start
-          Err msg ->
-            Err "Bad data"
-      Err msg ->
+    case (startDate, endDate) of
+      (Ok startDate, Ok endDate) ->
+        Ok <| Date.Extra.Duration.diffDays endDate startDate
+      _ ->
         Err "Bad data"
+-- DISGUSTING
+-- daysBetween: String -> String -> Result String Int
+-- daysBetween start end =
+--   let
+--     startDate = Date.fromString start
+--     endDate = Date.fromString end
+--   in
+--     case startDate of
+--       Ok start ->
+--         case endDate of
+--           Ok end ->
+--             Ok <| Date.Extra.Duration.diffDays end start
+--           Err msg ->
+--             Err "Bad data"
+--       Err msg ->
+--         Err "Bad data"
