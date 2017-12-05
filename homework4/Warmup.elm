@@ -21,9 +21,8 @@ stripQuotes: String -> String
 stripQuotes =
   Regex.replace Regex.All (Regex.regex "[\'\"]") (\_ -> "")
 
--- powers: Int -> Int -> Result String (List Int)
-powers: Int -> Int -> List Int
-powers base maxValue = [0]
+-- powers: Int -> Int -> List Int
+-- powers base maxValue = [0]
   -- I don't know this question is wild
   -- if (<) base 0 then
   --   Err "negative base"
@@ -43,7 +42,7 @@ powers base maxValue = [0]
 --       else c (count+1) (if n % 2 == 0 then n // 2 else 3 * n + 1)
 --   in
 --     c 0 n
-
+powers: Int -> Int -> List Int
 powers a b =
   List.map (\c -> a ^ c) (List.range 0 <| floor <| logBase (toFloat(a)) (toFloat(b)))
 
