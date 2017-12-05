@@ -1,5 +1,5 @@
 module Warmup exposing (..)
-import Regex exposing (..)
+import Regex exposing (replace, regex)
 import Arithmetic exposing (..)
 import Date exposing(fromString)
 import Date.Extra.Duration exposing (diffDays)
@@ -21,37 +21,12 @@ stripQuotes: String -> String
 stripQuotes =
   Regex.replace Regex.All (Regex.regex "[\'\"]") (\_ -> "")
 
--- powers: Int -> Int -> List Int
--- powers base maxValue = [0]
-  -- I don't know this question is wild
-  -- if (<) base 0 then
-  --   Err "negative base"
-  -- else
-  --   let
-  --     p result base maxValue =
-  --       if (<=) p (List.head <| List.reverse maxValue)
-  --   in
-  --     if
-  --     Ok [0]
-
--- Toal's example...??
--- collatz n =
---   let
---     c count n =
---       if n == 1 then count
---       else c (count+1) (if n % 2 == 0 then n // 2 else 3 * n + 1)
---   in
---     c 0 n
-
 powers: Int -> Int -> Result String (List Int)
 powers base max =
   if (<) base 0 then
     Err "negative base"
   else
     Ok <| List.map (\c -> base ^ c) (List.range 0 <| floor <| logBase (toFloat(base)) (toFloat(max)))
-
-
-
 
 sumOfCubesOfOdds: List Int -> Int
 sumOfCubesOfOdds intList =
