@@ -44,6 +44,11 @@ powers base maxValue = [0]
 --   in
 --     c 0 n
 
+powers a b =
+  List.map (\c -> a ^ c) (List.range 0 <| floor <| logBase (toFloat(a)) (toFloat(b)))
+
+
+
 
 sumOfCubesOfOdds: List Int -> Int
 sumOfCubesOfOdds intList =
