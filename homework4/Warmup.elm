@@ -42,9 +42,13 @@ stripQuotes =
 --       else c (count+1) (if n % 2 == 0 then n // 2 else 3 * n + 1)
 --   in
 --     c 0 n
-powers: Int -> Int -> List Int
-powers a b =
-  List.map (\c -> a ^ c) (List.range 0 <| floor <| logBase (toFloat(a)) (toFloat(b)))
+
+powers: Int -> Int -> Result String (List Int)
+powers base max =
+  if (<) base 0 then
+    Err "negative base"
+  else
+    Ok <| List.map (\c -> base ^ c) (List.range 0 <| floor <| logBase (toFloat(base)) (toFloat(max)))
 
 
 
