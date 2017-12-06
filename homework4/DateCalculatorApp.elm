@@ -45,11 +45,11 @@ view model =
     [ h1Stylized "Date Calculator"
     , p []
       [ text "From "
-      , inputStylized1 "from"
+      , inputStylized "from" ChangeFrom
       ]
     , p []
       [ text "To "
-      , inputStylized2 "to"
+      , inputStylized "to" ChangeTo
       ]
     , p []
       [ text "is "
@@ -87,8 +87,8 @@ h1Stylized msg =
       ]
     ] [ text msg ]
 
-inputStylized1 : String -> Html Msg
-inputStylized1 idName =
+inputStylized : String -> (String -> Msg) -> Html Msg
+inputStylized idName inputValue =
   input
     [ style
       [ ("border", "2px solid grey")
@@ -96,17 +96,5 @@ inputStylized1 idName =
       ]
       , id idName
       , type_ "date"
-      , onInput ChangeFrom
-    ] []
-
-inputStylized2 : String -> Html Msg
-inputStylized2 idName =
-  input
-    [ style
-      [ ("border", "2px solid grey")
-      , ("margin-left", "8px")
-      ]
-      , id idName
-      , type_ "date"
-      , onInput ChangeTo
+      , onInput inputValue
     ] []

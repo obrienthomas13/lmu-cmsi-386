@@ -11,9 +11,9 @@ change cents =
   else
     let
       quarters = (//) cents 25
-      quartersValue = (-) cents ((*) quarters 25)
+      quartersValue = (-) cents <| (*) quarters 25
       dimes = (//) (quartersValue) 10
-      nickels = (//) ((-) quartersValue ((*) dimes 10)) 5
+      nickels = (//) ((-) quartersValue <| (*) dimes 10) 5
     in
       Ok (quarters, dimes, nickels, (%) cents 5)
 
