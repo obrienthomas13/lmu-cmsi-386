@@ -15,7 +15,7 @@ change cents =
       dimes = (//) (quartersValue) 10
       nickels = (//) ((-) quartersValue ((*) dimes 10)) 5
     in
-      Ok (quarters, dimes, nickels, cents % 5)
+      Ok (quarters, dimes, nickels, (%) cents 5)
 
 stripQuotes: String -> String
 stripQuotes =
@@ -26,11 +26,11 @@ powers base max =
   if (<) base 0 then
     Err "negative base"
   else
-    Ok <| List.map (\c -> base ^ c) (List.range 0 <| floor <| logBase (toFloat(base)) (toFloat(max)))
+    Ok <| List.map (\c -> (^) base c) (List.range 0 <| floor <| logBase (toFloat <| base) (toFloat <| max))
 
 sumOfCubesOfOdds: List Int -> Int
 sumOfCubesOfOdds intList =
-  List.foldr (+) 0 <| List.map (\x -> x^3) <| List.filter isOdd intList
+  List.foldr (+) 0 <| List.map (\x -> (^) x 3) <| List.filter isOdd intList
 
 daysBetween: String -> String -> Result String Int
 daysBetween start end =

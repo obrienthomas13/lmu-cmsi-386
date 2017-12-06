@@ -24,7 +24,7 @@ suite =
         , describe "powers function"
             [ test "works for negative limit" <| \_ -> powers 2 -5 |> equal (Ok [])
             , test "works for 2 up to 63" <| \_ -> powers 2 63 |> equal (Ok [1, 2, 4, 8, 16, 32])
-            , test "works for 2 up to 64" <| \_ -> powers 2 63 |> equal (Ok [1, 2, 4, 8, 16, 32])
+            , test "works for 2 up to 64" <| \_ -> powers 2 64 |> equal (Ok [1, 2, 4, 8, 16, 32, 64])
             , test "works for 3 up to 81" <| \_ -> powers 3 81 |> equal (Ok [1, 3, 9, 27, 81])
             , test "rejects negative bases" <| \_ -> powers -2 63 |> equal (Err "negative base")
             ]

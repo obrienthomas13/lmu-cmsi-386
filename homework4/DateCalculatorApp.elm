@@ -1,32 +1,64 @@
-import Html exposing (Html, Attribute, body, div, input, text, h1)
-import Html.Attributes exposing (style)
+import Html exposing (Html, Attribute, body, span, input, text, h1, p)
+import Html.Attributes exposing (style, id, value, type_)
+import Html.Events exposing (onInput)
 import Warmup exposing (daysBetween)
 
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
-
--- MODEL
-
-type alias Model = Int
+type alias Model =
+  {
+    from : String
+    , to : String
+  }
 
 model : Model
 model =
-  0
-
+  { from = ""
+  , to = ""
+  }
 
 -- UPDATE
 
-type Msg = Reset
+type Msg =
+  ChangeFrom String
+  | ChangeTo String
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Reset ->
-      9
+    ChangeFrom fromDate -> { model | from = fromDate }
+    ChangeTo toDate -> { model | to = toDate }
+
+dateCalcMessage : String -> String -> String
+dateCalcMessage fromDate toDate =
+    case daysBetween fromDate toDate of
+      Ok days -> toString days
+      _ -> ""
 
 view : Model -> Html Msg
 view model =
+  bodyStylized
+  [
+    h1Stylized "Date Calculator"
+    , p [] [
+      text "From "
+      , inputStylized1 "from"
+    ]
+    , p [] [
+      text "To "
+      , inputStylized2 "to"
+    ]
+    , p [] [
+      text "is "
+      , span [id "output"] [text <| dateCalcMessage model.from model.to]
+      , text " days."
+    ]
+
+  ]
+
+bodyStylized: List (Html msg) -> Html msg
+bodyStylized htmlMsg =
   body
   [ style
     [ ("text-align", "center")
@@ -34,13 +66,10 @@ view model =
       , ("background-color", "linen")
       , ("margin", "0")
     ]
-  ]
-  [
-    h1Styled "Date Calculator"
-  ]
+  ] htmlMsg
 
-h1Styled : String -> Html msg
-h1Styled msg =
+h1Stylized : String -> Html msg
+h1Stylized msg =
   h1
   [ style
     [ ("font", "bold 40px Avenir")
@@ -48,5 +77,30 @@ h1Styled msg =
       , ("padding", "5px")
       , ("background-color", "cyan")
     ]
-  ]
-  [ text msg ]
+  ] [ text msg ]
+
+inputStylized1 : String -> Html Msg
+inputStylized1 idName =
+  input
+  [ style
+    [ ("border", "2px solid grey")
+      , ("margin-left", "8px")
+    ]
+    , id idName
+    , type_ "date"
+    , onInput ChangeFrom
+    , value model.from
+  ] []
+
+inputStylized2 : String -> Html Msg
+inputStylized2 idName =
+  input
+  [ style
+    [ ("border", "2px solid grey")
+      , ("margin-left", "8px")
+    ]
+    , id idName
+    , type_ "date"
+    , onInput ChangeTo
+    , value model.to
+  ] []
